@@ -46,6 +46,6 @@ The goal is to have as much people as possible (directly connected to the issue 
 
 ## Problems:
 
-* How to deal with accounts and autentication. Independently hosted? Self hosted? 
-* How to connect different apps
+* How to deal with accounts and autentication. The idea is that there is no main service, there is our data, but that presents problems regarding to account management and autentication.
+* How to connect different apps/services. Like above, if there is no main service providing the data, how would it be acessed?
 
