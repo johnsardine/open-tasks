@@ -27,7 +27,7 @@ The goal is to have as much people as possible (directly connected to the issue 
 * `user` - this needs more thought
 * `title` 
 * `status` - `pending`, `completed`, etc.
-* `order` or `priority` - used for ordering purposes (must be decided)
+* `priority` - used for ordering purposes
 * `type` - Could be, for example, `task`, `group`, `note`, etc. (a common list of types must be defined)
 * `parent` - `id` allows for hierarchical organization
 
