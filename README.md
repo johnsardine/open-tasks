@@ -22,7 +22,7 @@ The goal is to have as much people as possible (directly connected to the issue 
 **Main table**
 
 * `id` - Auto-increment unique field
-* `start_date` 
+* `date` 
 * `due_date`
 * `user` - this needs more thought
 * `title` 
