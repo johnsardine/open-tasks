@@ -1,7 +1,7 @@
 Open Tasks
 ==========
 
-Standard for task lists to allow interchangeabillity between apps
+Standard structure for task lists to allow interchangeabillity between apps
 
 ---
 
