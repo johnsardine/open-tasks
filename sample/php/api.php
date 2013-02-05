@@ -16,6 +16,7 @@ class Api extends Rest {
 	function __construct($config)
 	{
 
+		// Inherit Rest proprieties
 		parent::__construct();
 
 		// Create PDO MySQL connection
@@ -223,6 +224,15 @@ class Api extends Rest {
 	}
 
 
+	/**
+	 * Get item
+	 *
+	 * Recieves an array of parameters and conditions and returns an array with items + meta
+	 *
+	 * @access private
+	 * @param array $request (default: array())
+	 * @return void
+	 */
 	private function _get_item($request = array())
 	{
 
@@ -429,11 +439,24 @@ class Api extends Rest {
 	}
 
 
+	/**
+	 * Insert/Update item
+	 *
+	 * Recieves an array with parameters
+	 *
+	 * If an ID is present, will try to update an existing item, if not, it will create it
+	 *
+	 * If a parameter is not a predefined field, will be added/updated in meta
+	 *
+	 * @access private
+	 * @param array $request (default: array())
+	 * @return void
+	 */
 	private function _do_item($request = array())
 	{
 
-		// Allowed fields
-		$allowed_fields = array(
+		// Predefined fields
+		$predefined_fields = array(
 			'id',
 			'date',
 			'due_date',
@@ -452,7 +475,7 @@ class Api extends Rest {
 		foreach ($request as $key => $value) {
 
 			// If is not a predefined field, move to meta and remove from main data
-			if (!in_array($key, $allowed_fields)) {
+			if (!in_array($key, $predefined_fields)) {
 				$data_meta[$key] = array(
 					'key' => $key,
 					'value' => $value
@@ -521,6 +544,19 @@ class Api extends Rest {
 
 
 
+	/**
+	 * Get meta
+	 *
+	 * Recieves an array with item_id and key
+	 *
+	 * Returns corresponding meta if exists
+	 *
+	 * TO-DO: If value is json array, will be decoded
+	 *
+	 * @access private
+	 * @param array $request (default: array())
+	 * @return void
+	 */
 	private function _get_meta($request = array())
 	{
 
@@ -547,6 +583,13 @@ class Api extends Rest {
 	}
 
 
+	/**
+	 * Insert/Update meta
+	 *
+	 * @access private
+	 * @param array $request (default: array())
+	 * @return void
+	 */
 	private function _do_meta($request = array())
 	{
 
@@ -599,7 +642,11 @@ class Api extends Rest {
 
 
 	/**
-	 * template function.
+	 * Get mustache template
+	 *
+	 * Returns the requested mustache template
+	 *
+	 * Still needs work, is not well integrated into the api
 	 *
 	 * @access public
 	 * @return void
@@ -618,15 +665,18 @@ class Api extends Rest {
 		echo $file;
 	}
 
-	private function tests() {
+
+	private function tests()
+	{
 
 		echo "INSERT INTO `items` (`date`, `due_date`, `user`, `title`, `status`, `priority`, `type`, `parent`)
 VALUES\n";
-		for ($i=0; $i <= 9999; $i++) { 
+		for ($i=0; $i <= 9999; $i++) {
 			echo "('0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 'Title', '', 0, 'task', 0),\n";
 		}
 		echo "('0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 'Title', '', 0, 'task', 0);";
 
 	}
+
 
 }
