@@ -90,6 +90,12 @@ class Api extends Rest {
 
 			$request = $this->_request;
 
+			// Accept id via segment
+			$id_segment = segment(3);
+			if ($id_segment) {
+				$request['id'] = $id_segment;
+			}
+
 			// Explode all parameters into arrays
 			foreach ($request as $key => $value) {
 				$request[$key] = explode(',', $value);
