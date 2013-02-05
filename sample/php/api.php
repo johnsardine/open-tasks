@@ -540,13 +540,14 @@ class Api extends Rest {
 		}
 		$this->_do_meta($data_meta);
 
-		// Get last inserted row
-		$get_request = $this->pdo->query('SELECT * FROM `'.$this->table_main.'` WHERE `id`="'.$resource_id.'"');
+		// Prepare output
+		$output = array();
 
-		$get_request->setFetchMode(PDO::FETCH_OBJ);
+		// Get last inserted row
+		$output = current($this->_get_item(array( 'id' => $resource_id )));
 
 		// Return last insert row data for output
-		return $get_request->fetchObject();
+		return $output;
 
 	}
 
