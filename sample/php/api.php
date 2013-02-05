@@ -441,6 +441,8 @@ class Api extends Rest {
 
 		}
 
+		$output = array_values($output);
+
 		return $output;
 	}
 
