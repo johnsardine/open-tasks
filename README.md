@@ -34,10 +34,38 @@ The goal is to have as much people as possible (directly connected to the issue 
 **Support table**
 
 * `id` - Auto-increment unique field
-* `related` - `id` from main table
+* `item_id` - `id` from main table
 * `key` - allows for custom fields like `assigned_to`, which would contain user id. A list of common custom fields would need to be set so that apps with functionality that could be common to others with the same level of complexity, can use those fields.
 * `value` - if it's an array, must be `JSON`
 
+### Tables sql
+
+**Main table**
+
+	CREATE TABLE `items` (
+		`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+		`date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+		`due_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+		`user` bigint(20) NOT NULL DEFAULT '0',
+		`title` longtext NOT NULL,
+		`status` varchar(30) NOT NULL DEFAULT '',
+		`priority` bigint(20) NOT NULL DEFAULT '0',
+		`type` varchar(30) NOT NULL DEFAULT '',
+		`parent` bigint(20) NOT NULL,
+		PRIMARY KEY (`id`),
+		FULLTEXT KEY `title` (`title`)
+	) ENGINE=MyISAM;
+
+**Meta table**
+
+	CREATE TABLE `meta` (
+		`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	    `item_id` bigint(20) unsigned NOT NULL,
+	    `key` varchar(255) NOT NULL DEFAULT '',
+	    `value` longtext NOT NULL,
+	    PRIMARY KEY (`id`),
+	    FULLTEXT KEY `value` (`value`)
+	) ENGINE=MyISAM;
 
 ## API
 
