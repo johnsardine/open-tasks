@@ -29,18 +29,18 @@ class Api extends Rest {
 		// Include meta
 		require_once 'api.meta.php';
 		$this->meta = new Meta(array(
-			'table' => $this->table_meta,
-			'pdo' => $this->pdo
-		));
+				'table' => $this->table_meta,
+				'pdo' => $this->pdo
+			));
 
 		// Include items
 		require_once 'api.items.php';
 		$this->items = new Items(array(
-			'table' => $this->table_main,
-			'table_meta' => $this->table_meta,
-			'pdo' => $this->pdo,
-			'meta' => $this->meta
-		));
+				'table' => $this->table_main,
+				'table_meta' => $this->table_meta,
+				'pdo' => $this->pdo,
+				'meta' => $this->meta
+			));
 
 		$this->request_method = $this->get_request_method();
 
@@ -68,6 +68,28 @@ class Api extends Rest {
 	public function tasks()
 	{
 
+		$this->item('task');
+
+	}
+
+
+	/**
+	 * groups function.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function groups()
+	{
+
+		$this->item('group');
+
+	}
+
+
+	private function item($type = 'task')
+	{
+
 		// Get resource id (if exists)
 		// checks for id=:id or /tasks/:id
 		// Acceps multiple ids, comma separated
@@ -91,7 +113,7 @@ class Api extends Rest {
 			}
 
 			// Fetch only tasks through this method
-			$request['type'] = 'task';
+			$request['type'] = $type;
 
 			// Init output
 			$output = array();
@@ -100,7 +122,7 @@ class Api extends Rest {
 			$output = $this->items->get($request);
 
 			// Throw 404 error if nothing found
-			if (empty($output)) {
+			if (empty($output) && isset($request['id'])) {
 				$output = array(
 					'message' => 'Nothing found'
 				);
@@ -134,7 +156,7 @@ class Api extends Rest {
 				foreach ($request as $single) {
 					// Predefined parameters
 					$single['date'] = gmdate('Y-m-d H:i:s');
-					$single['type'] = 'task';
+					$single['type'] = $type;
 					$output[] = $this->items->update($single);
 				}
 
@@ -146,7 +168,7 @@ class Api extends Rest {
 
 				// Predefined parameters
 				$request['date'] = gmdate('Y-m-d H:i:s');
-				$request['type'] = 'task';
+				$request['type'] = $type;
 				$output = $this->items->update($request);
 			}
 
@@ -172,7 +194,7 @@ class Api extends Rest {
 			}
 
 			// Fetch only tasks through this method
-			$request['type'] = 'task';
+			$request['type'] = $type;
 
 			// Delete requested id
 			$delete_items = $this->items->delete($request);
@@ -180,7 +202,7 @@ class Api extends Rest {
 			if (empty($delete_items)) {
 				// Prepare last insert row data for output
 				$output = array(
-					'message' => 'No task exists with id '.$id
+					'message' => 'No '.$type.' exists with id '.$id
 				);
 				$output = json_encode($output);
 				$this->response($output, 406);
@@ -204,18 +226,6 @@ class Api extends Rest {
 			break;
 
 		}
-
-	}
-
-
-	/**
-	 * groups function.
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function groups()
-	{
 
 	}
 
