@@ -1,6 +1,20 @@
 <?php
 
-class Items {
+/**
+* Items API
+*
+* Get, update/create and delete items
+*
+* @package		OpenTasks
+* @copyright	Copyright (c) 2013 João Sardinha (http://johnsardine.com/)
+* @license		https://github.com/johnsardine/open-tasks/blob/master/license.txt MIT License
+* @version		1.0
+* @link			https://github.com/johnsardine/open-tasks
+* @since		1.0
+*/
+
+class Items
+{
 
 	private $pdo = '';
 
@@ -10,7 +24,7 @@ class Items {
 
 	private $table_meta = 'meta';
 
-	private $meta = '';
+	private $meta = ''; // Meta object
 
 	public $predefined_fields = array();
 	public $optimizations = array();
@@ -21,12 +35,9 @@ class Items {
 	public function __construct($params = array())
 	{
 
-		if (count($params) > 0)
-		{
-			foreach ($params as $key => $val)
-			{
-				if (isset($this->$key))
-				{
+		if (count($params) > 0) {
+			foreach ($params as $key => $val) {
+				if (isset($this->$key)) {
 					$this->$key = $val;
 				}
 			}
@@ -115,6 +126,7 @@ class Items {
 		$this->operators = array_keys($this->operators_main);
 
 	}
+
 
 	public function get($request = array())
 	{
@@ -292,6 +304,7 @@ class Items {
 
 	}
 
+
 	public function update($request = array())
 	{
 
@@ -370,7 +383,9 @@ class Items {
 		foreach ($data_meta as $key => $row) {
 			$data_meta[$key]['item_id'] = $resource_id;
 		}
-		$this->meta->update($data_meta);
+
+		if (!empty($data_meta))
+			$this->meta->update($data_meta);
 
 		// Prepare output
 		$output = array();
@@ -382,6 +397,7 @@ class Items {
 		return $output;
 
 	}
+
 
 	public function delete($request = array())
 	{
@@ -518,7 +534,9 @@ class Items {
 
 	}
 
-	private function parse_parameters($request = array()) {
+
+	private function parse_parameters($request = array())
+	{
 
 		$operators = $this->operators;
 
@@ -563,5 +581,6 @@ class Items {
 		return $parameters;
 
 	}
+
 
 }

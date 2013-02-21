@@ -1,6 +1,20 @@
 <?php
 
-class Meta {
+/**
+* Meta API
+*
+* Get, update/create and delete meta data
+*
+* @package		OpenTasks
+* @copyright	Copyright (c) 2013 João Sardinha (http://johnsardine.com/)
+* @license		https://github.com/johnsardine/open-tasks/blob/master/license.txt MIT License
+* @version		1.0
+* @link			https://github.com/johnsardine/open-tasks
+* @since		1.0
+*/
+
+class Meta
+{
 
 	private $pdo = '';
 
@@ -11,12 +25,9 @@ class Meta {
 	public function __construct($params = array())
 	{
 
-		if (count($params) > 0)
-		{
-			foreach ($params as $key => $val)
-			{
-				if (isset($this->$key))
-				{
+		if (count($params) > 0) {
+			foreach ($params as $key => $val) {
+				if (isset($this->$key)) {
 					$this->$key = $val;
 				}
 			}
@@ -52,6 +63,7 @@ class Meta {
 
 	}
 
+
 	public function get($request = array())
 	{
 
@@ -76,6 +88,7 @@ class Meta {
 		return $get_meta->fetch();
 
 	}
+
 
 	public function update($request = array())
 	{
@@ -113,9 +126,11 @@ class Meta {
 
 	}
 
+
 	public function delete()
 	{
 
 	}
+
 
 }
